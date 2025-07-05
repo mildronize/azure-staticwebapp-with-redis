@@ -1,14 +1,15 @@
-import { createAzureFunctionsHandler } from 'trpc-azure-functions-adapter';
-import { app} from '@azure/functions'
-import { appRouter } from './api/root';
-import { createContext } from './api/trpc';
+import { app } from '@azure/functions'
+import { azureHonoHandler } from '@marplex/hono-azurefunc-adapter'
+import honoApp from './app'
 
-app.http('trpc', {
-  methods: ['GET', 'POST'],
+app.http('httpTrigger', {
+  methods: [
+    'GET',
+    'POST',
+    'DELETE',
+    'PUT',
+  ],
   authLevel: 'anonymous',
-  route: 'trpc/{*proxy}',
-  handler: createAzureFunctionsHandler({
-    router: appRouter,
-    createContext,
-  }),
-});
+  route: '{*proxy}',
+  handler: azureHonoHandler(honoApp.fetch),
+})
