@@ -1,10 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 
 function App() {
   const [count, setCount] = useState(0);
+
+  const [data, setData] = useState<string>('');
+
+  const initData = async () => {
+    const response = await fetch('/api');
+    const result = await response.json() as { greeting: string };
+    setData(result.greeting);
+  }
+
+  useEffect(() => {
+    initData().catch((error) => {
+      console.error('Error fetching data:', error);
+      setData('Failed to fetch data');
+    });
+  }, []);
 
   return (
     <>
@@ -16,7 +31,8 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      {/* <h1>{post.data?.greeting}</h1> */}
+      <h1>Vite + React + Hono + Azure Functions</h1>
+      <h2>{data}</h2>
       <div className="card">
         <button onClick={() => setCount(count => count + 1)}>count is {count}</button>
         <p>
