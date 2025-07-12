@@ -9,7 +9,11 @@ function App() {
   const [data, setData] = useState<string>('');
 
   const initData = async () => {
-    const response = await fetch('/api');
+    const apiURL = import.meta.env.VITE_API_URL as string | undefined;
+    if(!apiURL) {
+      throw new Error('VITE_API_URL is not defined');
+    }
+    const response = await fetch(`${apiURL}/api`);
     const result = await response.json() as { greeting: string };
     setData(result.greeting);
   }
