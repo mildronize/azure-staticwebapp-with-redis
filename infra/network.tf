@@ -16,11 +16,11 @@ resource "azurerm_subnet" "aca" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.10.0.0/23"]
 
-  delegation {
-    name = "appsdelegation"
-    service_delegation {
-      name = "Microsoft.App/environments"  # จำเป็นสำหรับ VNet-injected ACA :contentReference[oaicite:5]{index=5}
-      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-    }
-  }
+  # delegation {
+  #   name = "appsdelegation"
+  #   service_delegation {
+  #     name = "Microsoft.App/environments"  # จำเป็นสำหรับ VNet-injected ACA :contentReference[oaicite:5]{index=5}
+  #     actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+  #   }
+  # }
 }

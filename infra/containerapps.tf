@@ -8,6 +8,7 @@ resource "azurerm_container_app_environment" "env" {
   # ค่าเริ่มต้นตอนนี้เป็น workload-profiles v2 (มี Consumption profile อยู่แล้ว) :contentReference[oaicite:6]{index=6}
 }
 
+
 resource "azurerm_container_app" "redis" {
   name                         = local.app_name
   container_app_environment_id = azurerm_container_app_environment.env.id
